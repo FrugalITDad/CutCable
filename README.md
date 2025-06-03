@@ -2,14 +2,12 @@ Created by: A Frugal IT Dad
 
 Welcome! This repository contains the official Kodi builds and wizard files for the CutCable Kodi Wizard, built to help my friends and family save money and enjoy easy, cable-free entertainment.
 
+
 📦 What's Inside?
 Kodi Wizard: Automatically installs the latest builds.
 
 Kodi Builds: Custom setups optimized for performance and simplicity.
 
-Maintenance Tools: Clear cache, remove packages, and more to keep things running smoothly.
-
-Optional Add-ons: Streaming, weather, subtitles, and more.
 
 🔧 Why This Exists
 As a frugal IT dad, I built this to make it easy for my loved ones to:
@@ -22,16 +20,13 @@ Avoid constant tech support calls 😅
 
 With this setup, you’ll always have the latest version without needing to reinstall everything manually.
 
+
 🚀 First-Time Setup
 Install Kodi (recommended: latest stable version).
 
 Use the Wizard URL in Kodi to install the build.
 
-Choose your version:
-
-With Plex (for media servers)
-
-Without Plex (for pure streaming)
+Choose your version
 
 A first-run setup will guide you through:
 
@@ -45,22 +40,7 @@ Configuring your sound system
 
 Enabling music lyrics
 
-📁 File Structure
-bash
-Copy
-Edit
-/wizard/
-   ├── plugin.program.cutcablewizard.zip
-   └── resources/
-         └── settings.xml
 
-/builds/
-   ├── CutCable_Full.zip
-   └── CutCable_Lite.zip
-
-/media/
-   ├── icon.png
-   └── fanart.jpg
 ⚠️ Disclaimer
 This project is for personal and private use only. It is shared with friends and family for educational and entertainment purposes. No content is hosted here — Kodi and addons are installed from their official sources.
 
