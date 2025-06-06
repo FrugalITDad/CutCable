@@ -2,10 +2,13 @@
 <addon id="plugin.program.cutcable.wizard" 
        name="CutCable Build Wizard" 
        version="1.0.0" 
-       provider-name="FrugalITDad">
+       provider-name="FrugalITDad"
+       type="xbmc.python.script">
     
     <requires>
         <import addon="xbmc.python" version="3.0.0"/>
+        <import addon="script.module.requests" version="2.27.1"/>
+        <import addon="script.module.simplejson" version="3.17.6"/>
     </requires>
     
     <extension point="xbmc.python.script" library="default.py">
@@ -16,12 +19,13 @@
     
     <extension point="xbmc.addon.metadata">
         <platform>all</platform>
-        <summary lang="en_GB">CutCable Build Wizard and Update Manager</summary>
-        <description lang="en_GB">Install and manage CutCable Kodi builds with automatic updates. Supports multiple build configurations including Plex integration and gaming add-ons.</description>
-        <disclaimer lang="en_GB">This addon manages Kodi configurations. Use at your own risk.</disclaimer>
+        <summary lang="en_US">CutCable Build Wizard and Update Manager</summary>
+        <description lang="en_US">Install and manage CutCable Kodi builds with automatic updates. Supports multiple build configurations including Plex integration and gaming add-ons.</description>
+        <disclaimer lang="en_US">This addon manages Kodi configurations. Use at your own risk.</disclaimer>
         <license>GPL-3.0</license>
         <website>https://github.com/FrugalITDad/FrugalITDad</website>
         <source>https://github.com/FrugalITDad/FrugalITDad</source>
+        <language>en</language>
         <news>
 v1.0.0 (2025-06-02)
 - Initial release
