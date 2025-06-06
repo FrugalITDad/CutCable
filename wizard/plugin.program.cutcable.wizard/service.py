@@ -6,7 +6,6 @@ CutCable Build Wizard - Background Service for Automatic Updates
 """
 
 import xbmc
-import time
 import sys
 import os
 
@@ -23,11 +22,12 @@ class CutCableService:
         
     def run(self):
         """Main service loop"""
-        xbmc.log('CutCable Service: Started', xbmc.LOGINFO)
+        xbmc.log('CutCable Service: Started', xbmc.LOGNOTICE)
         
-        # Wait for Kodi to fully start up
-        startup_delay = 30  # seconds
+        # Wait for Kodi to fully start up (30 seconds)
+        startup_delay = 30
         if self.monitor.waitForAbort(startup_delay):
+            xbmc.log('CutCable Service: Aborted during startup delay', xbmc.LOGNOTICE)
             return
         
         # Perform startup update check
@@ -36,14 +36,34 @@ class CutCableService:
         except Exception as e:
             xbmc.log(f'CutCable Service: Startup check failed - {str(e)}', xbmc.LOGERROR)
         
-        # Keep service running but dormant
-        # The main update checking is done on startup only
-        while not self.monitor.abortRequested():
-            # Check every hour if service should continue
-            if self.monitor.waitForAbort(3600):  # 1 hour
-                break
+        # Periodic daily check loop
+        daily_check_seconds = 86400  # 24 hours
         
-        xbmc.log('CutCable Service: Stopped', xbmc.LOGINFO)
+        while not self.monitor.abortRequested():
+            # Wait up to 24 hours or until Kodi requests abort
+            if self.monitor.waitForAbort(daily_check_seconds):
+                # Abort requested during wait
+                xbmc.log('CutCable Service: Abort requested, exiting service loop', xbmc.LOGNOTICE)
+                break
+            
+            # Perform periodic update check
+            try:
+                self.wizard.periodic_update_check()
+            except Exception as e:
+                xbmc.log(f'CutCable Service: Periodic update check failed - {str(e)}', xbmc.LOGERROR)
+        
+        # Optional cleanup before exit
+        try:
+            if hasattr(self.wizard, 'cleanup'):
+                self.wizard.cleanup()
+        except Exception as e:
+            xbmc.log(f'CutCable Service: Cleanup failed - {str(e)}', xbmc.LOGERROR)
+        
+        xbmc.log('CutCable Service: Stopped', xbmc.LOGNOTICE)
+
+if __name__ == '__main__':
+    service = CutCableService()
+    service.run()
 
 if __name__ == '__main__':
     service = CutCableService()
