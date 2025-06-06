@@ -32,6 +32,7 @@ class CutCableService:
         
         # Perform startup update check
         try:
+            xbmc.log('CutCable Service: Performing startup update check', xbmc.LOGDEBUG)
             self.wizard.startup_update_check()
         except Exception as e:
             xbmc.log(f'CutCable Service: Startup check failed - {str(e)}', xbmc.LOGERROR)
@@ -48,6 +49,7 @@ class CutCableService:
             
             # Perform periodic update check
             try:
+                xbmc.log('CutCable Service: Performing periodic update check', xbmc.LOGDEBUG)
                 self.wizard.periodic_update_check()
             except Exception as e:
                 xbmc.log(f'CutCable Service: Periodic update check failed - {str(e)}', xbmc.LOGERROR)
@@ -55,15 +57,12 @@ class CutCableService:
         # Optional cleanup before exit
         try:
             if hasattr(self.wizard, 'cleanup'):
+                xbmc.log('CutCable Service: Performing cleanup', xbmc.LOGDEBUG)
                 self.wizard.cleanup()
         except Exception as e:
             xbmc.log(f'CutCable Service: Cleanup failed - {str(e)}', xbmc.LOGERROR)
         
         xbmc.log('CutCable Service: Stopped', xbmc.LOGNOTICE)
-
-if __name__ == '__main__':
-    service = CutCableService()
-    service.run()
 
 if __name__ == '__main__':
     service = CutCableService()
