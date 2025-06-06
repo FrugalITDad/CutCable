@@ -17,12 +17,12 @@ import xbmcvfs
 
 # Import the main wizard class
 try:
-    from cutcable_wizard_main import CutCableWizard
+    from cutcable_wizard import CutCableWizard
 except ImportError:
     # Handle path issues for imports
     addon_path = xbmcaddon.Addon().getAddonInfo('path')
     sys.path.insert(0, addon_path)
-    from cutcable_wizard_main import CutCableWizard
+    from cutcable_wizard import CutCableWizard
 
 class CutCableWizardService:
     def __init__(self):
@@ -80,7 +80,7 @@ class CutCableWizardService:
             self.check_pending_installation()
             
             # Perform startup update check if enabled
-            if self.wizard.settings.get('auto_updates', True):
+            if hasattr(self.wizard, 'settings') and self.wizard.settings.get('auto_updates', True):
                 self.startup_update_check()
             
             # Clean up old temporary files
@@ -118,15 +118,18 @@ class CutCableWizardService:
             if not self.wizard:
                 return
             
-            marker_file = os.path.join(self.wizard.addon_data_path, 'install_marker.json')
-            if xbmcvfs.exists(marker_file):
-                xbmc.log("CutCable Wizard Service: Found pending installation, completing...", xbmc.LOGINFO)
-                
-                # Complete the installation
-                self.wizard.complete_installation()
-                
-                # Show completion notification after a delay
-                threading.Timer(5.0, self.show_completion_notification).start()
+            # Check if wizard has addon_data_path attribute
+            if hasattr(self.wizard, 'addon_data_path'):
+                marker_file = os.path.join(self.wizard.addon_data_path, 'install_marker.json')
+                if xbmcvfs.exists(marker_file):
+                    xbmc.log("CutCable Wizard Service: Found pending installation, completing...", xbmc.LOGINFO)
+                    
+                    # Complete the installation if method exists
+                    if hasattr(self.wizard, 'complete_installation'):
+                        self.wizard.complete_installation()
+                    
+                    # Show completion notification after a delay
+                    threading.Timer(5.0, self.show_completion_notification).start()
                 
         except Exception as e:
             xbmc.log(f"CutCable Wizard Service: Error checking pending installation - {str(e)}", xbmc.LOGERROR)
@@ -134,7 +137,7 @@ class CutCableWizardService:
     def show_completion_notification(self):
         """Show installation completion notification"""
         try:
-            if self.wizard and self.wizard.build_info.get('installed_build'):
+            if self.wizard and hasattr(self.wizard, 'build_info') and self.wizard.build_info.get('installed_build'):
                 build_name = self.wizard.build_info['installed_build']
                 xbmc.executebuiltin(f'Notification(CutCable Wizard, {build_name} installation complete!, 8000)')
         except:
@@ -148,7 +151,8 @@ class CutCableWizardService:
                 time.sleep(5)
                 
                 if not self.monitor.abortRequested() and self.wizard:
-                    self.wizard.startup_update_check()
+                    if hasattr(self.wizard, 'startup_update_check'):
+                        self.wizard.startup_update_check()
                     self.last_update_check = time.time()
                     
             except Exception as e:
@@ -162,7 +166,7 @@ class CutCableWizardService:
     def cleanup_temp_files(self):
         """Clean up temporary files from previous sessions"""
         try:
-            if not self.wizard:
+            if not self.wizard or not hasattr(self.wizard, 'temp_path'):
                 return
             
             temp_path = self.wizard.temp_path
@@ -273,11 +277,12 @@ class CutCableWizardService:
             current_time = time.time()
             
             if current_time - self.last_update_check >= self.update_check_interval:
-                if self.wizard and self.wizard.settings.get('auto_updates', True):
+                if self.wizard and hasattr(self.wizard, 'settings') and self.wizard.settings.get('auto_updates', True):
                     
                     def update_check_thread():
                         try:
-                            self.wizard.periodic_update_check()
+                            if hasattr(self.wizard, 'periodic_update_check'):
+                                self.wizard.periodic_update_check()
                         except Exception as e:
                             xbmc.log(f"CutCable Wizard Service: Error in periodic update check - {str(e)}", xbmc.LOGERROR)
                     
@@ -300,7 +305,7 @@ class CutCableWizardService:
                 xbmc.log("CutCable Wizard Service: Performing periodic maintenance", xbmc.LOGDEBUG)
                 
                 # Clean up old backups
-                if self.wizard:
+                if self.wizard and hasattr(self.wizard, 'cleanup_old_backups'):
                     self.wizard.cleanup_old_backups()
                 
                 # Clean temporary files
@@ -332,16 +337,17 @@ class CutCableWizardService:
     def handle_settings_change(self):
         """Handle addon settings changes"""
         try:
-            if self.wizard:
+            if self.wizard and hasattr(self.wizard, 'settings'):
                 # Reload settings
                 old_auto_updates = self.wizard.settings.get('auto_updates', True)
-                self.wizard.settings = self.wizard.load_settings()
-                new_auto_updates = self.wizard.settings.get('auto_updates', True)
-                
-                # Log settings change
-                if old_auto_updates != new_auto_updates:
-                    status = "enabled" if new_auto_updates else "disabled"
-                    xbmc.log(f"CutCable Wizard Service: Auto updates {status}", xbmc.LOGINFO)
+                if hasattr(self.wizard, 'load_settings'):
+                    self.wizard.settings = self.wizard.load_settings()
+                    new_auto_updates = self.wizard.settings.get('auto_updates', True)
+                    
+                    # Log settings change
+                    if old_auto_updates != new_auto_updates:
+                        status = "enabled" if new_auto_updates else "disabled"
+                        xbmc.log(f"CutCable Wizard Service: Auto updates {status}", xbmc.LOGINFO)
                     
         except Exception as e:
             xbmc.log(f"CutCable Wizard Service: Error handling settings change - {str(e)}", xbmc.LOGERROR)
@@ -394,7 +400,7 @@ class CutCableWizardService:
             self.running = False
             
             # Cleanup wizard instance
-            if self.wizard:
+            if self.wizard and hasattr(self.wizard, 'cleanup'):
                 self.wizard.cleanup()
                 self.wizard = None
             
