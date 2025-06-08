@@ -17,7 +17,7 @@
             </assets>
         </extension>
     </addon>
-    <addon id="plugin.program.cutcable.wizard" name="CutCable Wizard" version="1.0.0" provider-name="FrugalITDad">
+    <addon id="plugin.program.cutcablewizard" name="CutCable Wizard" version="1.0.0" provider-name="FrugalITDad">
         <requires>
             <import addon="xbmc.python" version="3.0.0"/>
         </requires>
