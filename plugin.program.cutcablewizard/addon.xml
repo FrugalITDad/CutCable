@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="plugin.program.cutcable.wizard" 
+<addon id="plugin.program.cutcablewizard" 
        name="CutCable Build Wizard" 
        version="1.0.0" 
        provider-name="FrugalITDad"
@@ -23,8 +23,8 @@
         <description lang="en_US">Install and manage CutCable Kodi builds with automatic updates. Supports multiple build configurations including Plex integration and gaming add-ons.</description>
         <disclaimer lang="en_US">This addon manages Kodi configurations. Use at your own risk.</disclaimer>
         <license>GPL-3.0</license>
-        <website>https://github.com/FrugalITDad/CutCable</website>
-        <source>https://github.com/FrugalITDad/CutCable</source>
+        <website>https://frugalitdad.github.io/CutCable</website>
+        <source>https://frugalitdad.github.io/CutCable</source>
         <language>en</language>
         <news>
 v1.0.0 (2025-06-02)
