@@ -4,7 +4,7 @@
         <dir>
             <info compressed="false">https://frugalitdad.github.io/CutCable/docs/addons.xml</info>
             <checksum>https://frugalitdad.github.io/CutCable/docs/addons.xml.md5</checksum>
-            <datadir zip="true">https://frugalitdad.github.io/CutCable/docs/repository.frugalitdad/</datadir>
+            <datadir zip="true">https://frugalitdad.github.io/CutCable/docs/zips/</datadir>
         </dir>
     </extension>
     <extension point="xbmc.addon.metadata">
