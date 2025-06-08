@@ -9,7 +9,7 @@
             </dir>
         </extension>
         <extension point="xbmc.addon.metadata">
-            <summary>Addons to make family & friends life easier</summary>
+            <summary>Addons to make family and friends life easier</summary>
             <description>FrugalITDad Repository - Addons to make family and friends life easier. Features the CutCable Wizard and other helpful tools for entertainment and productivity.</description>
             <platform>all</platform>
             <assets>
