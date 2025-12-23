@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addons>
+
+    <!-- Repository Add-on -->
     <addon id="repository.frugalitdad"
            name="FrugalITDad Kodi Repository"
            version="1.0.0"
            provider-name="FrugalITDad">
+
         <extension point="xbmc.addon.repository">
             <info compressed="false">
                 https://frugalitdad.github.io/CutCable/addons.xml
@@ -15,10 +18,34 @@
                 https://frugalitdad.github.io/CutCable/zips/
             </datadir>
         </extension>
+
         <extension point="xbmc.addon.metadata">
             <summary>FrugalITDad Private Kodi Repository</summary>
             <description>Private Kodi repository for CutCable builds and tools.</description>
             <platform>all</platform>
         </extension>
+
     </addon>
+
+    <!-- Wizard Add-on -->
+    <addon id="plugin.program.cutcablewizard"
+           name="CutCable Wizard"
+           version="1.0.0"
+           provider-name="FrugalITDad"
+           type="xbmc.python">
+
+        <extension point="xbmc.python.module">
+            <import addon="xbmc" version="1.0.0"/>
+        </extension>
+
+        <extension point="xbmc.addon.metadata">
+            <summary lang="en">CutCable Wizard for Kodi</summary>
+            <description lang="en">Installs and manages CutCable builds, including first-run setup and automatic updates.</description>
+            <platform>all</platform>
+            <icon>icon.png</icon>
+            <fanart>fanart.jpg</fanart>
+        </extension>
+
+    </addon>
+
 </addons>
