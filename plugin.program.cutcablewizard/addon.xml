@@ -1,1 +1,16 @@
-
+This XML file does not appear to have any style information associated with it. The document tree is shown below.
+<addon id="plugin.program.cutcablewizard" name="CutCable Wizard" version="1.0.0" provider-name="FrugalITDad">
+<requires>
+<import addon="xbmc.python" version="3.0.0"/>
+</requires>
+<extension point="xbmc.python.pluginsource" library="default.py">
+<provides>executable</provides>
+</extension>
+<extension point="xbmc.addon.metadata">
+<summary>CutCable Build Wizard</summary>
+<description>Install, update, and maintain CutCable Kodi builds.</description>
+<platform>all</platform>
+<icon>icon.png</icon>
+<fanart>fanart.jpg</fanart>
+</extension>
+</addon>
